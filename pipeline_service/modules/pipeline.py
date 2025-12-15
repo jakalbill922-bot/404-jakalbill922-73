@@ -150,10 +150,10 @@ class GenerationPipeline:
         image_without_background_2 = self.rmbg.remove_background(image_edited_2)
 
         # save to debug
-        image_edited.save("image_edited.png")
-        image_edited_2.save("image_edited_2.png")
-        image_without_background.save("image_without_background.png")
-        image_without_background_2.save("image_without_background_2.png")
+        # image_edited.save("image_edited.png")
+        # image_edited_2.save("image_edited_2.png")
+        # image_without_background.save("image_without_background.png")
+        # image_without_background_2.save("image_without_background_2.png")
 
         trellis_result: Optional[TrellisResult] = None
 
