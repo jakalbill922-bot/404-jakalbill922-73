@@ -136,24 +136,13 @@ class GenerationPipeline:
         # 1. Edit the image using Qwen Edit
         image_edited = self.qwen_edit.edit_image(
             prompt_image=image, seed=request.seed,
-            prompt="Show this object in left three-quarters view and make sure it is fully visible. Turn background neutral solid color contrasting with an object. Delete background details. Delete watermarks. Keep object colors. Sharpen image details"
+            prompt="Show this object in three-quarters view and make sure it is fully visible. Turn background neutral solid color contrasting with an object. Delete background details. Delete watermarks. Keep object colors. Sharpen image details"
         )
 
         # 2. Remove background
         image_without_background = self.rmbg.remove_background(image_edited)
 
-        # add another view of the image
-        image_edited_2 = self.qwen_edit.edit_image(
-            prompt_image=image, seed=request.seed, 
-            prompt="Show this object in right three-quarters view and make sure it is fully visible. Turn background neutral solid color contrasting with an object. Delete background details. Delete watermarks. Keep object colors. Sharpen image details"
-        )
-        image_without_background_2 = self.rmbg.remove_background(image_edited_2)
-
-        # save to debug
-        # image_edited.save("image_edited.png")
-        # image_edited_2.save("image_edited_2.png")
-        # image_without_background.save("image_without_background.png")
-        # image_without_background_2.save("image_without_background_2.png")
+        original_image_without_background = self.rmbg.remove_background(image)
 
         trellis_result: Optional[TrellisResult] = None
 
@@ -163,7 +152,7 @@ class GenerationPipeline:
         # 3. Generate the 3D model
         trellis_result = self.trellis.generate(
             TrellisRequest(
-                images=[image_without_background, image_without_background_2], seed=request.seed, params=trellis_params
+                images=[image_without_background, original_image_without_background], seed=request.seed, params=trellis_params
             )
         )
 
