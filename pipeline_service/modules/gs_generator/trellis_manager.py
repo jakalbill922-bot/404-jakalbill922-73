@@ -71,7 +71,6 @@ class TrellisService:
                 preprocess_image=False,
                 formats=["gaussian"],
                 num_oversamples=params.num_oversamples,
-                mode="multidiffusion",
             )
 
             generation_time = time.time() - start
